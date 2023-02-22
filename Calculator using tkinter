@@ -1,0 +1,177 @@
+from tkinter import *
+from tkinter import font
+
+#main window
+root = Tk()
+root.title("ErrorXVI's Calculator")
+root.geometry("400x400")
+root.resizable(False, False)
+
+#functions for calculator
+def add_to_input(num):                  #wokring
+    current = inpf.get()
+    inpf.delete(0, END)
+    inpf.insert(0, str(current) + str(num))
+
+def clear():                            #working
+    inpf.delete(0, END)
+
+def delete():
+    current = inpf.get()
+    inpf.delete(0, END)
+    inpf.insert(0, current[:-1])
+
+def calculate():                        #working
+    try:
+        expression = inpf.get()
+        res = str(eval(expression))
+        #print(res)
+        inpf.delete(0, END)
+        inpf.insert(0, res)
+    except:
+        inpf.delete(0, END)
+        inpf.insert(0, "ERROR CANNOT CALCULATE")
+
+def square_root():                      #working
+    try:
+        num = float(inpf.get())
+        #print("Square_root func")
+        #print(num)
+        res = str(round(num ** 0.5, 10))
+        #print(res)
+        inpf.delete(0, END)
+        inpf.insert(0, res)
+    except:
+        inpf.delete(0, END)
+        inpf.insert(0, "ERROR CANNOT SQUARE ROOT")
+
+def square():                            #working
+    try:
+        #print("Square func")
+        num = float(inpf.get())
+        #print(num)
+        res = str(num ** 2)
+        #print(res)
+        inpf.delete(0, END)
+        inpf.insert(0, res)
+    except:
+        inpf.delete(0, END)
+        inpf.insert(0, "ERROR CANNOT SQUARE")
+
+def negate():                    #working
+    try:
+        num = float(inpf.get())
+        res = str(num * -1)
+        inpf.delete(0, END)
+        inpf.insert(0, res)
+    except:
+        inpf.delete(0, END)
+        inpf.insert(0, "ERROR CANNOT NEGATE")
+        
+def add_decimal():                            #working
+    current_text = inpf.get()
+    if "." not in current_text:
+        inpf.insert(END, ".")
+        
+def compute_modulus():                      #modulus not really working
+    expression = inpf.get()
+    values = expression.split("%")          #issue with this part of the code
+    if len(values) != 2:
+        inpf.delete(0, END)
+        inpf.insert(0, "ERROR CANNOT MOD")
+    else:
+        res = float(values[0]) % float(values[1])
+        inpf.delete(0, END)
+        inpf.insert(0, res)
+        
+def compute_inverse():                              #working
+    expression = inpf.get()
+    value = float(expression)
+    if value == 0:
+        inpf.delete(0, END)
+        inpf.insert(0, "ERROR CANNOT INVERT")
+    else:
+        inverse = 1.0 / value
+        inpf.delete(0, END)
+        inpf.insert(0, inverse)
+
+#input field
+inpf = Entry(root, width=37, borderwidth=5, font=("Segoe UI", 14))
+inpf.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+
+#number buttons
+b1 = Button(root, text="1", font=("Segoe UI", 14), command=lambda: add_to_input(1)) 
+b1.grid(row=5, column=0, padx=5, pady=5)
+
+b2 = Button(root, text="2", font=("Segoe UI", 14), command=lambda: add_to_input(2))
+b2.grid(row=5, column=1, padx=5, pady=5)
+
+b3 = Button(root, text="3", font=("Segoe UI", 14), command=lambda: add_to_input(3))
+b3.grid(row=5, column=2, padx=5, pady=5)
+
+b4 = Button(root, text="4", font=("Segoe UI", 14), command=lambda: add_to_input(4))
+b4.grid(row=4, column=0, padx=5, pady=5)
+
+b5 = Button(root, text="5", font=("Segoe UI", 14), command=lambda: add_to_input(5))
+b5.grid(row=4, column=1, padx=5, pady=5)
+
+b6 = Button(root, text="6", font=("Segoe UI", 14), command=lambda: add_to_input(6))
+b6.grid(row=4, column=2, padx=5, pady=5)
+
+b7 = Button(root, text="7", font=("Segoe UI", 14), command=lambda: add_to_input(7))
+b7.grid(row=3, column=0, padx=5, pady=5)
+
+b8 = Button(root, text="8", font=("Segoe UI", 14), command=lambda: add_to_input(8))
+b8.grid(row=3, column=1, padx=5, pady=5)
+
+b9 = Button(root, text="9", font=("Segoe UI", 14), command=lambda: add_to_input(9))
+b9.grid(row=3, column=2, padx=5, pady=5)
+
+b0 = Button(root, text="0", font=("Segoe UI", 14), command=lambda: add_to_input(0))
+b0.grid(row=6, column=1, padx=5, pady=5)
+
+bDecimal = Button(root, text=".", font=("Segoe UI", 14), command=lambda: add_to_input('.'))
+bDecimal.grid(row=6, column=2, padx=5, pady=5)
+
+#operator buttons
+bAdd = Button(root, text="+", font=("Segoe UI", 14), command=lambda: add_to_input("+"))
+bAdd.grid(row=5, column=3, padx=5, pady=5)
+
+bSub = Button(root, text="-", font=("Segoe UI", 14), command=lambda: add_to_input("-"))
+bSub.grid(row=4, column=3, padx=5, pady=5)
+
+bMult = Button(root, text="*", font=("Segoe UI", 14), command=lambda: add_to_input("*"))
+bMult.grid(row=3, column=3, padx=5, pady=5)
+
+bDiv = Button(root, text="/", font=("Segoe UI", 14), command=lambda: add_to_input("/"))
+bDiv.grid(row=2, column=3, padx=5, pady=5)
+
+bEq = Button(root, text="=", font=("Segoe UI", 14), command=calculate)
+bEq.grid(row=6, column=3, padx=5, pady=5)
+
+bClear = Button(root, text="C", font=("Segoe UI", 14), command=clear)
+bClear.grid(row=1, column=2, padx=5, pady=5)
+
+bDel = Button(root, text="DEL", font=("Segoe UI", 14), command=delete)
+bDel.grid(row=1, column=3, padx=5, pady=5)
+
+bSqrt = Button(root, text="sqrt", font=("Segoe UI", 14), command=square_root)
+bSqrt.grid(row=2, column=2, padx=5, pady=5)
+
+bSqr = Button(root, text="x^2", font=("Segoe UI", 14), command=square)
+bSqr.grid(row=2, column=1, padx=5, pady=5)
+
+bNeg = Button(root, text="+/-", font=("Segoe UI", 14), command=negate)
+bNeg.grid(row=6, column=0, padx=5, pady=5)
+
+bInv = Button(root, text="1/x", font=("Segoe UI", 14), command=compute_inverse)
+bInv.grid(row=2, column=0, padx=5, pady=5)
+
+bMod = Button(root, text="%", font=("Segoe UI", 14), command=compute_modulus)
+bMod.grid(row=1, column=0, padx=5, pady=5)
+
+bCE = Button(root, text="CE", font=("Segoe UI", 14), command=clear)
+bCE.grid(row=1, column=1, padx=5, pady=5)
+
+#main loop
+root.mainloop()
